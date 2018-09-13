@@ -19,7 +19,7 @@ def get_model():
     global model
     global excipientModel
     excipientModel = load_model('chem_E_model.h5')
-    model = load_model('chem_model.h5')
+    model = load_model('chem_logs_model.h5')
     x = preprocess_SMILE("C")
     model.predict(x)
     excipientModel.predict(x)    
@@ -33,7 +33,7 @@ def get_weight(smiles):
     elif(smiles[0]=='E'):
         return Chem.Descriptors.MolWt(Chem.MolFromSmiles(smiles[1]))
     else:
-        #else the smiles is an array of smiles
+        #else smiles is an array of smiles
         weights = []
         for i in range(len(smiles)):
             mol = Chem.MolFromSmiles(smiles[i])
@@ -74,8 +74,8 @@ def get_name(smiles):
 def preprocess_SMILE(smiles):
     print(smiles)
     fpArray = []
-    #length = number of bits the MorganFingerprint has
-    length = 512
+    #length = number of bits the Fingerprint has
+    length = 2048
     #print('length: ',len(smiles),smiles)
     if(type(smiles) is str or smiles[0]=="E" ):
         mol = ""
@@ -100,7 +100,7 @@ def preprocess_SMILE(smiles):
             if(mol is None):
                 continue
             else:
-                fp = AllChem.GetMorganFingerprintAsBitVect(mol,3, nBits = length)
+                fp = AllChem.rdmolops.RDKFingerprint(mol, fpSize = length)
                 fpArray.append(fp)
     #convert the fingerprint array into a numpy array
     X = np.array(fpArray) 
@@ -129,7 +129,7 @@ def predict():
             'names': name
         }
         return jsonify(response)
-
+    #check if the chosen option was to use the Excipient model message['mol'][0]=="E" is true
     elif(message['mol'][0] and message['mol'][0]=="E"):
         print(message['mol'][0])
         encoded_smile= message['mol'][1]
