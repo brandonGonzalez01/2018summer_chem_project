@@ -1,27 +1,35 @@
 
 from flask import request, jsonify, Flask
+
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 from rdkit.Chem.rdmolops import RDKFingerprint
 from rdkit import DataStructs
 from rdkit.Chem import AllChem
+
 import numpy as np
 import io
 import rdkit
 import keras
+
 from keras.models import Sequential
 from keras.models import load_model
+
 import pubchempy as pcp
 
 app = Flask(__name__)
 app.debug = False
+
 def get_model():
     global model
     global excipientModel
+    global model_PH
     excipientModel = load_model('chem_E_model.h5')
     model = load_model('chem_logs_model.h5')
+    model_PH=load_model('chem_E_model.h5')
     x = preprocess_SMILE("C")
     model.predict(x)
+    model_PH.predict(x)
     excipientModel.predict(x)    
     print(" * Model loaded!")
 
@@ -115,7 +123,7 @@ get_model()
 @app.route("/predict",methods=['POST'])
 
 def predict():
-
+    response={}
     message = request.get_json(force=True)
     print(message)
     #check if the chosen option was to use the Excipient model
@@ -150,6 +158,7 @@ def predict():
         }
         return jsonify(response)
     else:     
+        
         #else this model was the solubility in water model
         encoded_smile = message['mol']
         
@@ -169,7 +178,14 @@ def predict():
             }
         print(response)
         return jsonify(response)
-            
+
+@app.route("/pH",methods=['POST'])
+#print("pH page accesed")
+def ph_page():
+    return 0
+
+
+        
     
 
     

@@ -2,13 +2,17 @@
 <html>
 
 <head>
-    <title>Solubility Predictor</title>
-    <style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Summer Intern Project: Brandon Gonzalez</title>
+
+<style>
         * {
             font-family: 'arial';
             font-size: 20px;
-        }
-    </style>
+        }        
+</style>
 
     <script>
         //This script is to show the two different pages
@@ -23,73 +27,91 @@
 
 
 <body>
-    <div id='title' align='center'> Summer Intern Project: Brandon Gonzalez</div>
-
-    <div id="Page1">
-        <a href="#" onclick="return show('Page2','Page1');">Show page 2 </a>
-
-        <div id='main' align='left'>
-            <h2 align='center'>Solubility in Water</h2>
-            <input id="file-selector" type="file" name="files" multiple>
-
-            <h3>Single SMILES:
-                <input id="single-mol" type="text" align='right' />
-            </h3>
-
-            <div id='buttons'>
-                <input type="radio" id='rC' name="molInput" algin='left'> CSV file
-                <br>
-                <input type="radio" id="rS" name="molInput" align='right'> Single Molecule via SMILES
-                <br>
-            </div>
-            <button id="predict-button" allign='center' style='color:rgb(54, 63, 70)'>Predict</button>
-
+    <nav class='navbar navbar-default'>
+        <div class='container-fluid'>
+            <button type="button" class='navbar-toggle collapsed'
+             data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+                <span calss='sr-only'>Toggle navigation</span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+            </button>
+            <a class="navbar-brand" href='#'>
+                Summer Intern Project: Brandon Gonzalez</a>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href=predict.html>Home</a></li>
+                <li><a href=predict.html onclick="return show('Page2','Page1');">Optiform Select Predictor</a></li>
+                <li><a href=about.html>About</a></li>
+                <li><a href=more.html>More</a></li>
+            </ul>
         </div>
-        <div id="loadDiv" align="center" style.display="none"> Loading <progress id="loadBar" value="0" align='center'></progress></div>
-
-        <div class="container" align='center'>
-            <canvas align ='left' id="row-chart-s" width="900" height="450"></canvas>
-            <table id="chartS"  class='row-border hover' style='width:70%'></table>
+    </nav>
+    
+    <div class='container-fluid'>
+        <div class='row'>
+            <main class='col-md-11 ml-sm-auto col-lg-10 px-4'>
+                <div id="Page1">
+                   
+    
+                    <div id='main' align='left'>
+                        <div class='bg-secondary'><h2 align='center'>Solubility in Water</h2></div>
+                        <input id="file-selector" type="file" name="files" multiple>
+                        <p class="font-weight-normal">Single SMILES:</p>
+                            
+                            <input id="single-mol" type="text" align='right' />
+    
+                        <div id='buttons'>
+                            <input type="radio" id='rC' name="molInput" algin='left'> CSV file
+                            <br>
+                            <input type="radio" id="rS" name="molInput" align='right'> Single Molecule via SMILES
+                            <br>
+                        </div>
+    
+                        <button id="predict-button" allign='center' style='color:rgb(54, 63, 70)'>Predict</button>
+    
+                        <div id="loadDiv" align="center" style.display="none"> Loading
+                            <progress id="loadBar" value="0" align='center'></progress>
+                        </div>
+    
+                        <div class="container" align='center'>
+                            <canvas align='left' id="row-chart-s" width="900" height="450"></canvas>
+                            <table id="chartS" class='row-border hover' style='width:70%'></table>
+                        </div>
+                    </div>
+                </div>
+                <div id="Page2">
+                    <a href="#" onclick="return show('Page1','Page2');">Back to Solubility Predictor</a>
+                    <div>
+                        <h2 align='center'>Solubility of a Molecule in Different Excipients</h2>
+                        <p class ='font-weight-normal'>SMILES:</p>
+                        <input id="single-mol-E" type="text" align='right' />
+                        <button id="predict-E" allign='right'>Predict</button>
+                        <div class="container" align='middle'>
+                            <canvas id="row-chart-e"></canvas>
+                            <a id='linkE' download='filename.png'>Save Chart as Image</a>
+    
+                            <table id="chartE" class='row-border hover' style='width:75%'></table>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
-
-
-
-    <div id="Page2">
-        <a href="#" onclick="return show('Page1','Page2');">Back to Page 1</a>
-        <div>
-            <h2 align='center'>Solubility of a Molecule in Different Excipients</h2>
-            <p>SMILES:</p>
-            <input id="single-mol-E" type="text" align='right' />
-            <button id="predict-E" allign='right'>Predict</button>
-            <div class="container" align='middle'>
-                <canvas id="row-chart-e"></canvas>
-                <table id="chartE" class='row-border hover' style='width:75%'></table>
-            </div>
-        </div>
-    </div>
-
 
     <div id='pubchemsketch' , align='center' style='color:#3498DB'>
         <h1 align='center'>PubChemSketch:</h1>
         <iframe src="https://pubchem.ncbi.nlm.nih.gov/edit2/index.html" align='center' height="500" width="900" style="border:none;"></iframe>
     </div>
 
-
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></link>
-    <script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
     <text id="selected molecule" src="" />
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script>
-
+        var solubilityChart;
+        var eSolubilityChart;
         document.getElementById("Page2").style.display = 'none';
-        
         //molecules array will store the smiles given by the user
         var molecules = [];
         
@@ -103,9 +125,13 @@
         */
         function findMgPerMl(logS, molWt) {
             //raise log s predicted value to its base of 10 to get mol/L. Then divide by 1000 to get mol/ml
-            var InvLogS = Math.pow(logS, 10) // /1000;
+            var InvLogS = Math.pow(10,logS) // /1000;
+            console.log('InvLogS:')
+            console.log(InvLogS)
             //multiply mol/ml by molecular weight to get g/ml. Then multiply by 1000 to get mg/ml. 
             var s = InvLogS * molWt;
+            console.log('Calculated Sol')
+            console.log(s)
             return s.toFixed(4);
         }
 
@@ -140,20 +166,27 @@
         /*when the predict button is pressed
         */
         $("#predict-button").click(function (event) {
-            /*display load bar to let user know that it is in fact workin
+            /*display load bar to let user know that it is in fact working
             */
             var loadBar = document.getElementById("loadBar");
-            loadBar.style.display = "block";
-            loadBar.value = '100';
-            loadDiv = document.getElementById("loadDiv");
-            loadDiv.style.display = "block"
-
-            let message = {}
+            var loadDiv = document.getElementById("loadDiv");
+            let message = {};
+            document.getElementById("row-chart-s").style.display = 'none';
             //check to make sure an option is selected from the two radial buttons
             if (document.getElementById('rC').checked || document.getElementById('rS').checked) {
                 //check if csv option
                 if (document.getElementById('rC').checked) {
+            
                     if( $("#file-selector")[0].files.length >= 1){
+                        //set the load bar
+                        loadBar.style.display = "block";
+                        loadBar.value = '100';
+                        loadDiv.style.display = "block"
+                        
+                        //set the bar chart to hide
+                        
+
+
                         molecules = input;
                         message = {
                             mol: molecules
@@ -165,6 +198,11 @@
                     }
                 
                 else { //single smile option set the message to contain the single smile
+                    //set the load bar
+                    loadBar.style.display = "block";
+                    loadBar.value = '100';
+                    loadDiv.style.display = "block"
+                    
                     document.getElementById('single-mol').value
                     molecules = [document.getElementById('single-mol').value];
                     message = {
@@ -199,6 +237,7 @@
                     gives the x domain
                     
                     **/
+                    
                     var solubilitiesAndIndexes = [];
                     var solubilities = [];
                     var indexes = [solubilities.length];
@@ -232,14 +271,19 @@
                     //get rid of loading bar
                     loadBar.style.display = "none";
                     loadDiv.style.display = "none";
+                    document.getElementById("row-chart-s").style.display = 'block';
                     //make a chartjs barchart for the general solubilities (PAGE 1 CHART)
                     let solChart = document.getElementById('row-chart-s').getContext('2d');
-                    var solubiltyChart = new Chart(solChart, {
+                    if(typeof solubilityChart != 'undefined'){
+                        console.log('inside destroy')
+                        solubilityChart.destroy();
+                    }
+                    solubiltyChart = new Chart(solChart, {
                         type: 'bar',
                         data: {
                             labels: IUPACNames,
                             datasets: [{
-                                label: 'Solubility mg/mL',
+                                label: 'Theoretical aqueos solubility',
                                 data: solubilities,
                                 backgroundColor: '#3498DB',
                                 borderWidth: 1.5,
@@ -250,9 +294,12 @@
                         options: {
                             title: {
                                 display: true,
-                                text: 'Solubility',
+                                text: 'Predicted Solubility mg/ml',
                                 fontSize: 25,
                                 backgroundColor: '#566573',
+                            },
+                            gridLines:{
+                                display:false,
                             },
                             scales: {
                                 yAxes: [{
@@ -261,11 +308,16 @@
                                     },
                                     gridLines: {
                                         display: true,
-                                    }
+                                    },
+                                    scaleLabel: {
+                                     display:true,
+                                     labelString:'mg/mL',
+                                 }
                                 }],
                                 xAxes: [{
                                     ticks: {
                                         display: true,
+                                        autoSkip:false,
                                     },
 
                                     gridLines: {
@@ -311,9 +363,13 @@
         /* This will be used for the second page, the excipient solubility 
         *  prediciton, activated when the predict button is pressed
         */
+       
         $("#predict-E").click(function (event) {
-
-            //Hard coded the excipients used in OSS thanks to Rina Fong , Senior Scientist @Catalent
+            if(typeof eSolubilityChart != 'undefined'){
+                console.log('in destroy')
+                eSolubilityChart.destroy()
+            }
+            //Hard coded the excipients used in OSS thanks to Rina Fong , Senior Scientist @Catalent SD
             let excipients = ['Water', '0.1N HCl in Water',
                 '0.1N Sodium Hydroxide in Water', '20mM Citrate in Water, pH4',
                 '20mM Phosphate in Water, pH8', '5% Dextrose in Water (DSW)',
@@ -349,7 +405,7 @@
                     };
                 });
 
-
+                Chart.defaults.global.defaultColor = 'rgba(250,250,250,0.9)';
 
                 //    console.log(predictions);
                 /*We've gotten a response*/
@@ -382,9 +438,10 @@
                         group = "Solvents";
                     }
                     solubilities.push(solubility);
-                    //this array will be used for the dataTable, has headers : [index excipient solubility group ] 
+                    //this array will be used for the dataTable, has headers : [index excipient solubility group ]
+                    var index_ = i 
                     solubilitiesAndExcipients.push(
-                        [i, excipients[i], solubility, group]);
+                        [++index_, excipients[i], solubility, group]);
                     i++;
                 });
 
@@ -421,8 +478,8 @@
                 }
                 
                 /*chartjs bar chart */
-                let solChart = document.getElementById('row-chart-e').getContext('2d');
-                var solubiltyChart = new Chart(solChart, {
+                let eChart = document.getElementById('row-chart-e').getContext('2d');
+                eSolubilityChart = new Chart(eChart, {
                     type: 'bar',
                     data: {
                         labels: excipients,
@@ -453,32 +510,38 @@
                         title: {
                             display: true,
                             text: 'Solubility of ' + name+" mg/ml",
-                            fontSize: 25,
-                            gridLines: {
-                                display: false,
-                                drawTicks: true,
-
-                            }
+                            fontSize: 25
                         },
                         legend: {
                             position: 'top',
                         },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    color: '#5B2C6F'
-                                }
-                            }],
-                            xAxes: [{
-                                display: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    color: '#5B2C6F'
-                                }
+                         scales: {
+                              yAxes: [{
+                                  ticks: {
+                                      beginAtZero: true,
+                                      display:true
+                                 },
+                                 scaleLabel: {
+                                     display:true,
+                                     labelString:'mg/mL',
+                                 }
+                              }],
+                              xAxes: [{
+                                  ticks: {
+                                      autoSkip: false,
+                                      display: true
+                                    },
+                                    gridLines:{
+                                        display: false
+                                    }
 
-                            }]
-                        }
+                                }]
+                        },
+                        gridLines:{
+                            display:false,
+                            drawBorder:true,
+                            drawOnChartArea:false
+                        },
                     }
                 });
                 var tableE;
@@ -488,7 +551,7 @@
                     //destroy table first so that it can be reinitialised with new data :)
                     tableE.destroy();
                     $('#chartE').DataTable({
-                        data: solubilitiesAndIndexes,
+                        data: solubilitiesAndExcipients,
                         columns: [
                             { title: "Index" },
                             { title: "Excipient" },
@@ -513,8 +576,27 @@
                 }
 
             });
-        });                
+            
+        });
+    //download funcitonality for excipient bar chart    
+    linkE.addEventListener("click", function () {
+        console.log('In Download feature')
+        var imgData = document.getElementById('row-chart-e').toDataURL("image/jpeg", 1.0);
+        var url_base64 = document.getElementById('row-chart-e').toDataURL('image/png');
+        linkE.href = url_base64;
+
+
+    }, false);                
+    
     </script>
+
+<link href="style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></link>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
